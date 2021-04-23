@@ -1,0 +1,17 @@
+{
+  "name": "d12ae317b24fbee6",
+  "main": "d12ae317b24fbee6@146.js",
+  "version": "146.0.0",
+  "homepage": "https://observablehq.com/d/d12ae317b24fbee6",
+  "author": {
+    "name": "gittyaulia",
+    "url": "https://observablehq.com/@gittyaulia"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  },
+  "dependencies": {
+    "@observablehq/runtime": "^4.8.2"
+  }
+}
