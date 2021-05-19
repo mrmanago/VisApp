@@ -1,0 +1,33 @@
+.App {
+  background-color: #323F4B;;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  max-width: 100%;
+}
+
+.Navbar {
+  position: absolute;
+  width: 6vh;
+  height: 100vh;
+  background: #1F2933;
+  box-shadow: 0px 20px 100px rgba(0, 0, 0, 0.05);
+}
+
+.Box {
+  left: 11vh;
+  top: 2vh;
+  width: 185vh;
+  height: 96vh;
+  position: absolute;
+  background: #1F2933;
+  padding-left: 10px;
+  border-radius: 10px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
