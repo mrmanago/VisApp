@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+# Features
+
+* Navigation bar on the left that expands when you click on it
+
+# Link
+
+Check it out using this link! 
+http://188.166.41.55/
+
+
+# Below is how to start the project on your local machine:
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
