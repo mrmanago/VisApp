@@ -7,6 +7,8 @@
 Check it out using this link! 
 http://188.166.41.55/
 
+Link to the github repo:
+https://github.com/mrmanago/VisApp
 
 # Below is how to start the project on your local machine:
 
