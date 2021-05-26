@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 // import Button from "./components/Button";
 import VisWindow from "./components/VisWindow";
+import DataLoader from "./components/DataLoader";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
                   <VisWindow />
                   <br/>
                   <Footer />
+                  <DataLoader />
                 </div>
       </div>
   );
