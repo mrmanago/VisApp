@@ -18,7 +18,9 @@ const App = () => {
                   <Route exact path="/Visualize" components={Visualize} />
                   <Route exact path="/Info" components={Info} />
                   <Button />
+                  <br/>
                   <VisWindow />
+                  <br/>
                   <Footer />
                 </div>
       </div>

@@ -1,14 +1,13 @@
 import React from 'react'
 //import PropTypes from 'prop-types'
 
-const VisWindow = () => {
+const Visualization = () => {
+    // Will display certain visualizations based on props
 
     return (
         <div>
-        {/*  ChartInfo  */}
-        {/* Visualization */}
         </div>
     )
 }
 
-export default VisWindow
+export default Visualization
