@@ -7,7 +7,7 @@ const VisWindow = () => {
         <div>
         {/*  ChartInfo  */}
         {/* Visualization */}
-        </div>
+        </div> 
     )
 }
 

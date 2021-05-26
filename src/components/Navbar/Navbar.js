@@ -18,7 +18,7 @@ const Navbar = () => {
                 <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
             </NavIcon>
             <NavText>
-                Charts
+                Visualize
             </NavText>
         </NavItem>
         <NavItem eventKey="home">
