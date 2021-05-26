@@ -1,11 +1,12 @@
 import React from 'react'
+//import PropTypes from 'prop-types'
 
-const Visualize = () => {
+const Node = () => {
+
     return (
         <div>
-            Visualize
         </div>
     )
 }
 
-export default Visualize
+export default Node
