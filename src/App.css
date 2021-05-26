@@ -1,15 +1,57 @@
+@font-face {
+  font-family: 'exthing';
+  src: url(fonts/Exthing-1Gox2.ttf);
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'helvetica';
+  src: url(fonts/Helvetica.ttf);
+  font-style: normal;
+  font-weight: normal;
+}
+
+h1 {
+  position: relative;
+  width: 306px;
+  height: 100px;
+  font-family: Exthing;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 96px;
+  line-height: 210px;
+  letter-spacing: 0.01em;
+  color: #F5F7FA;
+}
+
+h2 {
+  position: relative;
+  width: 762px;
+  height: 50px;
+  font-family: helvetica;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 2px;
+  letter-spacing: 0.01em;
+  color: #CBD2D9;
+}
+
+p {
+  color: #CBD2D9;
+  font-family: helvetica;
+}
 .App {
-  background-color: #323F4B;;
-  min-height: 100vh;
+  background-color: #323F4B;
+  height: 2220px;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
   color: white;
-  max-width: 100%;
 }
 
 .Navbar {
-  position: absolute;
+  float: left;
   width: 6vh;
   height: 100vh;
   background: #1F2933;
@@ -17,13 +59,12 @@
 }
 
 .Box {
-  left: 11vh;
-  top: 2vh;
-  width: 185vh;
-  height: 96vh;
+  left: 90px;
+  top: 10px;
+  width: 1590px;
+  height: 2200px;
   position: absolute;
   background: #1F2933;
-  padding-left: 10px;
   border-radius: 10px;
 }
 
@@ -31,3 +72,24 @@
   color: #61dafb;
 }
 
+.Visualization1 {
+  margin-top: 120px;
+  margin-left: 20px;
+  width: 770px;
+  height: 770px;
+  background-color: #323F4B;
+}
+
+.Visualization2 {
+  margin-top: 120px;
+  margin-left: 20px;
+  margin-left: 780px;
+  width: 770px;
+  height: 770px;
+  background-color: #323F4B;
+}
+
+.Footer {
+  text-align: center;
+  margin-top: 400px;
+}

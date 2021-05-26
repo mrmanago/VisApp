@@ -3,8 +3,9 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div>
+        <div className="Footer">
             <p>VisApp Created by Group 28</p>
+            <p>Github:aaaa</p>
         </div>
     )
 }
