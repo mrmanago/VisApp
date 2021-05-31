@@ -4,10 +4,10 @@ import React from 'react'
 const VisWindow = () => {
 
     return (
-        <div className="Visualization1">
-            <div className="Visualization2"> </div>
-        </div>
-        
+        <div>
+        {/*  ChartInfo  */}
+        {/* Visualization */}
+        </div> 
     )
 }
 
