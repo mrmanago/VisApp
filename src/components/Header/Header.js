@@ -6,9 +6,9 @@ const Header = () => {
         <div>
             <h1>VIZ IT</h1>
             <h2>Visualize the beautiful mess of your data</h2>
-            <iframe title="Introduction Video" width="854" height="480"
-            src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
+            {/*<iframe title="Introduction Video" width="854" height="480"*/}
+            {/*src="https://www.youtube.com/embed/tgbNymZ7vqY">*/}
+            {/*</iframe>*/}
         </div>
     )
 }

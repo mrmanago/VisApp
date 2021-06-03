@@ -6,11 +6,11 @@ import './styles/index.css'
 import {BrowserRouter} from 'react-router-dom'
 
 ReactDOM.render(
-  <React.StrictMode>
+  /*<React.StrictMode>*/
   <BrowserRouter>
     <App />
   </BrowserRouter>  
-  </React.StrictMode>,
+  /*</React.StrictMode>*/,
   document.getElementById('root')
 );
 

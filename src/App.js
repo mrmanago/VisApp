@@ -6,18 +6,19 @@ import Footer from './components/Footer';
 // import Button from "./components/Button";
 import VisWindow from "./components/VisWindow";
 import DataLoader from "./components/DataLoader";
+// import * as d3 from "d3";
 
 const App = () => {
   return (
       <div className="App">
-              <Navbar />
-                <div className="Box">
-                  <center><Header /></center>
-                  <VisWindow />
-                  <br/>
-                  <Footer />
-                  <DataLoader />
-                </div>
+        <DataLoader />
+        <Navbar />
+        <div className="Box">
+          <VisWindow />
+          <center><Header /></center>
+          <br/>
+          <Footer />
+        </div>
       </div>
   );
 
