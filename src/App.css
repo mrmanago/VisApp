@@ -54,7 +54,7 @@ p {
   float: left;
   width: 6vh;
   height: 100vh;
-  background: #1F2933;
+  background-color: #1F2933;
   box-shadow: 0px 20px 100px rgba(0, 0, 0, 0.05);
 }
 
@@ -93,3 +93,14 @@ p {
   text-align: center;
   margin-top: 400px;
 }
+
+.tooltip {
+  position: absolute;
+  background-color: lightgrey;
+  padding: 10px;
+}
+
+.chartContainer {
+  border: 1px solid black;
+}
+
