@@ -1,4 +1,5 @@
 import React from 'react'
+import Visualization from "../Visualization/Visualization";
 //import PropTypes from 'prop-types'
 
 const VisWindow = () => {
@@ -7,6 +8,7 @@ const VisWindow = () => {
         <div>
         {/*  ChartInfo  */}
         {/* Visualization */}
+        <Visualization /> 
         </div> 
     )
 }

@@ -93,3 +93,14 @@ p {
   text-align: center;
   margin-top: 400px;
 }
+
+.tooltip {
+  position: absolute;
+  background-color: lightgrey;
+  padding: 10px;
+}
+
+.chartContainer {
+  border: 1px solid black;
+}
+
