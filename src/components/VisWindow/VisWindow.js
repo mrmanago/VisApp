@@ -1,15 +1,15 @@
 import React from 'react'
-import Visualization from "../Visualization/Visualization";
+import Visualization from "../Visualization/Visualization"
+import DataLoader from "../DataLoader";
 //import PropTypes from 'prop-types'
 
 const VisWindow = () => {
 
     return (
         <div>
-        {/*  ChartInfo  */}
-        {/* Visualization */}
-        <Visualization /> 
-        </div> 
+            <DataLoader />
+            <Visualization />
+        </div>
     )
 }
 
