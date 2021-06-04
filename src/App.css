@@ -100,3 +100,14 @@ p {
   min-height: fit-content;
   background-color: #1F2933;
 }
+
+.tooltip {
+  position: absolute;
+  background-color: lightgrey;
+  padding: 10px;
+}
+
+.chartContainer {
+  border: 1px solid black;
+}
+

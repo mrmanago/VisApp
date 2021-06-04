@@ -1,4 +1,5 @@
 import React from 'react'
+import Node from './Node'
 //import PropTypes from 'prop-types'
 
 const Visualization = () => {
@@ -6,7 +7,9 @@ const Visualization = () => {
 
     return (
         <div>
+            <Node/>
         </div>
+       
     )
 }
 
