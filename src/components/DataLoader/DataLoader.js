@@ -135,7 +135,7 @@ const DataLoader = () => {
     reader.onload = function(e) {
         const contents = e.target.result
         load_dataset(contents)
-    }
+    }//
 
     d3.select("input").on("change", function(){
         d3.select(".table").append("text").text("Loading...")
