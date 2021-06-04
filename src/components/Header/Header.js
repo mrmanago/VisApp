@@ -1,4 +1,6 @@
 import React from 'react'
+//import Button from "../../components/Button";
+import '../../App.css';
 //import PropTypes from 'prop-types'
 
 const Header = () => {
