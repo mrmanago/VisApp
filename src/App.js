@@ -4,9 +4,8 @@ import './App.css';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import VisWindow from "./components/VisWindow";
-// import * as d3 from "d3";
-
+import Vis1 from "./components/VisWindow/Vis1.js";
+import Vis2 from "./components/VisWindow/Vis2.js";
 
 const App = () => {
   return (
@@ -19,9 +18,13 @@ const App = () => {
           </div>
         </Sticky>
         <div className="Box">
-        <center><Header /></center>
-        <VisWindow />
-        <Footer />
+          <center><Header /></center>
+          <div className="VisWindow">
+            <Vis1 />
+            <Vis2 />
+          </div>
+          <br/>
+          <Footer />
         </div>
       </div>
   );

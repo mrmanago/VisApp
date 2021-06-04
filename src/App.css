@@ -44,9 +44,9 @@ p {
 }
 .App {
   background-color: #323F4B;
+  width: 1690px;
   height: 2220px;
-  display: flex;
-  flex-direction: column;
+  display: absolute;
   color: white;
 }
 
@@ -55,7 +55,7 @@ p {
   width: 6vh;
   height: 100vh;
   background-color: #1F2933;
-  box-shadow: 0px 20px 100px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 1);
 }
 
 .Box {
@@ -72,26 +72,33 @@ p {
   color: #61dafb;
 }
 
-.Visualization1 {
-  margin-top: 120px;
-  margin-left: 20px;
-  width: 770px;
-  height: 770px;
+.Vis1 {
+  float: left;
+  width: 778px;
+  height: 778px;
   background-color: #323F4B;
 }
 
-.Visualization2 {
-  margin-top: 120px;
-  margin-left: 20px;
-  margin-left: 780px;
-  width: 770px;
-  height: 770px;
+.Vis2 {
+  float: right;
+  width: 778px;
+  height: 778px;
   background-color: #323F4B;
 }
 
 .Footer {
   text-align: center;
   margin-top: 400px;
+}
+
+.VisWindow {
+  margin-top: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 98%;
+  height: 778px;
+  min-height: fit-content;
+  background-color: #1F2933;
 }
 
 .tooltip {
