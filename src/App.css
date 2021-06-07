@@ -1,3 +1,7 @@
+html {
+  background: #1F2933;
+}
+
 @font-face {
   font-family: 'exthing';
   src: url(fonts/Exthing-1Gox2.ttf);

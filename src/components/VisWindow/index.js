@@ -1,2 +1,2 @@
-export { default } from './Vis1'
+export { default } from './Chord'
 export { default } from './Vis2'

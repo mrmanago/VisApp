@@ -1,17 +1,16 @@
 import React from 'react'
 //import PropTypes from 'prop-types'
 
-const Vis1 = () => {
-    
+const Chord = (props) => {
+    const data = props.data
+    console.log(data)
+
     return (
         <div className="Vis1">
-            {/* Visualization 1: */}
             Visualization 1
-            {/*  ChartInfo  */}
-            {/* Visualization */}
         </div>
     )   
 
 }
 
-export default Vis1
+export default Chord
