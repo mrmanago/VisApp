@@ -1,3 +1,7 @@
+html {
+  background: #1F2933;
+}
+
 @font-face {
   font-family: 'exthing';
   src: url(fonts/Exthing-1Gox2.ttf);
@@ -107,14 +111,14 @@ p {
   float: left;
   width: 778px;
   height: 778px;
-  background-color: #323F4B;
+  background-color: #ffffff;
 }
 
 .Vis2 {
   float: right;
   width: 778px;
   height: 778px;
-  background-color: #323F4B;
+  background-color: #ffffff;
 }
 
 .VisWindow {
