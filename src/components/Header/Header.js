@@ -5,7 +5,7 @@ import '../../App.css';
 
 const Header = () => {
     return (
-        <div>
+        <div className="Header">
             <h1>VIZ IT</h1>
             {/* <h2>Visualize the beautiful mess of your data</h2>
             <iframe title="Introduction Video" width="854" height="480"
