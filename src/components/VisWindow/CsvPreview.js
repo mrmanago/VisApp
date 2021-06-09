@@ -9,7 +9,7 @@ const CsvPreview = ({data}) => {
     stats.append("div").text("Rows: " + data.length)
 
     // found from http://bl.ocks.org/syntagmatic/3299303
-    // view csv
+    //view csv
     // d3.select(".table")
     //     .html("")
     //     .append("tr")
