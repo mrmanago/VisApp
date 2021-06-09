@@ -1,5 +1,7 @@
 import React from 'react'
 import SideNav, { /*Toggle, Nav,*/ NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import visualizeIcon from '../Navbar/NavbarIcons/visualizeIcon.png'
+import infoIcon from '../Navbar/NavbarIcons/infoIcon.png'
 
 import './react-sidenav.css';
 
@@ -12,20 +14,24 @@ const Navbar = () => {
 >
     <SideNav.Toggle />
     <SideNav.Nav defaultSelected="home">
-    <NavItem eventKey="charts">
+    <NavItem eventKey="visualize">
             <NavIcon>
-                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+                <a href="#Visualize">
+                <img className="visualizeIcon" src={visualizeIcon} alt="visualizeIcon" />
+                </a>
             </NavIcon>
             <NavText>
                 Visualize
             </NavText>
         </NavItem>
-        <NavItem eventKey="home">
+        <NavItem eventKey="info">
             <NavIcon>
-                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+            <a href="#Info">
+            <img className="infoIcon" src={infoIcon} alt="infoIcon" />
+            </a>
             </NavIcon>
             <NavText>
-                Home
+                Info
             </NavText>
         </NavItem>
     </SideNav.Nav>
