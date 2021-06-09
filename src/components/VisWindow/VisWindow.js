@@ -21,11 +21,18 @@ const VisWindow = () => {
     //Loading default data
     useEffect(() => {
         d3.csv("/sample-datasets/enron-v1.csv").then(data => {
-            // TODO make data column a date
-
-            // TODO sort data by date
-            setStartTime(0) //first row
-            setEndTime(1) //last row
+            // makes date column a date type
+            let parseDate = d3.timeParse("%Y-%m-%d")
+            data.forEach(d => {
+                d.date = parseDate(d.date)
+            })
+            const firstDate = data.reduce((r, o) => o.date < r.date ? o : r)
+            const lastDate = new Date(firstDate.date)
+            lastDate.setDate(lastDate.getDate() + 400)
+            setStartTime(firstDate.date)
+            setEndTime(lastDate)
+            //setStartTime(parseDate("2000-01-01"))
+            //setEndTime(parseDate("2000-01-15"))
             setData(data)
             setLoading(false)
         })

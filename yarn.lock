@@ -9386,6 +9386,11 @@ react-error-overlay@^6.0.9:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
+react-external-link@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-external-link/-/react-external-link-1.2.1.tgz#d3b43cd909bb4f707c16f3a6b643dd973cd8cdbc"
+  integrity sha512-+VrL2b1VrDuFA1XEwzf/mb7Iqh/79YQK5TglOiT5Qd28bKPIsSFsI/bmE5M8QRFn3Mb5i6iQCKcvuBOWxV/onQ==
+
 react-granim-canvas@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-granim-canvas/-/react-granim-canvas-1.0.2.tgz#80742968c1badd361a55c6a7abd130db5159eb77"

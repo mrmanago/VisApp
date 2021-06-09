@@ -2,58 +2,53 @@ import React, {useEffect} from 'react'
 import * as d3 from "d3";
 //import PropTypes from 'prop-types'
 
-const Node = ({ data }) => {
+const Node = ({ data, startTime, endTime }) => {
     const width = 778
     const height = 778
 
     useEffect(() => {
-        // Finding all the availible peop;e
-        const ids = Array.from(new Set(data.flatMap(d => [d.fromId]))).sort(d3.ascending)
-        console.log(ids)
-
-        // ParseData
-        let nodeData = data
-        let objData = {}
-        let edges = []
+        const dataDate = []
         for (let i = 0; i < data.length; i++) {
-            nodeData[i]['id'] = nodeData[i]['fromId']
-            delete nodeData[i]['fromId']
-        }
-        // creates array to store the edges. Does not include targets that do not have a source
-        for (let i = 0; i < nodeData.length; i++) {
-            if (ids.includes(nodeData[i]['toId'])) {
-                edges.push({source: nodeData[i].id, target: nodeData[i]['toId']})
+            if (!(data[i].date < startTime || data[i].date > endTime)) {
+                dataDate.push(data[i])
             }
         }
-        objData = {nodes: nodeData, links: edges}
-        //const jsonData = JSON.stringify(objData)
-        //console.log(objData)
+        console.log(dataDate)
 
-        // Change color later to sync with chord
+        let nodes = []
+        for (let i = 0; i < dataDate.length; i++) {
+            if (!nodes.some(e => e.id === dataDate[i]['fromId'])) {
+                nodes.push({id: dataDate[i]['fromId'], Email: dataDate[i]['fromEmail'], JobTitle: dataDate[i]['fromJobtitle']})
+            }
+            if (!nodes.some(e => e.id === dataDate[i]['toId'])) {
+                nodes.push({id: dataDate[i]['toId'], Email: dataDate[i]['toEmail'], JobTitle: dataDate[i]['toJobtitle']})
+            }
+        }
+
+        // creates array to store the edges. If there is not a node for the outgoing edge it creates one
+        let edges = []
+        for (let i = 0; i < dataDate.length; i++) {
+            edges.push({source: dataDate[i]['fromId'], target: dataDate[i]['toId'], date: dataDate[i]['date']})
+        }
+
         const color = d3.scaleOrdinal(d3.schemeCategory10)
-
-        // Array of objects that hold the nodes and links. Can replace these with the calc version above
-        const links = objData.links.map(d => Object.create(d))
-        const nodes = objData.nodes.map(d => Object.create(d))
-        //console.log(links)
-        //console.log(nodes)
 
         // force sim
         const simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.id))
-            .force("charge", d3.forceManyBody().strength(-.05))
+            .force("link", d3.forceLink(edges).id(d => d.id))
+            .force("charge", d3.forceManyBody().strength(-50))
             .force("center", d3.forceCenter(width / 2, height / 2))
+
+        // Clear old version
+        d3.select(".node-diagram").selectAll("*").remove()
 
         const svg = d3.select(".node-diagram")
             .attr("viewBox", [0, 0, width, height])
             .append("g");
 
-        // clear out old version
-        svg.selectAll("*").remove();
-
         const link = svg
             .selectAll("line")
-            .data(links)
+            .data(edges)
             .enter()
             .append("line")
             .style("stroke", "#69b3a2"); // TODO color edges by sentiment
@@ -64,7 +59,7 @@ const Node = ({ data }) => {
             .enter()
             .append("circle")
             .attr("r", 5)
-            .attr("fill", color);
+            .attr("fill", color); // TODO base color on group
 
         node.append("title")
             .text(d => d.id);
@@ -74,15 +69,13 @@ const Node = ({ data }) => {
                 .attr("x1", d => d.source.x)
                 .attr("y1", d => d.source.y)
                 .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
+                .attr("y2", d => d.target.y)
 
             node
                 .attr("cx", d => d.x)
-                .attr("cy", d => d.y);
-        });
-
-
-    }, [data])
+                .attr("cy", d => d.y)
+        })
+    }, [data, startTime, endTime])
 
     // create sim - setting up the layout
 
@@ -94,10 +87,8 @@ const Node = ({ data }) => {
 
     // link - filter using timeStart and timeEnd
 
-
     // TODO brushing and linking
     // TODO grouping in node
-
 
     return (
         <div className="Vis2">
