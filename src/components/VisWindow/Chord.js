@@ -10,7 +10,7 @@ const Chord = ({ data }) => {
     const outerRadius = innerRadius + 10
 
     useEffect(() => {
-        // groups
+        // groups (might move this and colors to viswindow so that node-link can sync)
         const names = Array.from(new Set(data.flatMap(d => [d.fromJobtitle, d.toJobtitle]))).sort(d3.ascending)
 
         // matrix

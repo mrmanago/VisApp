@@ -19,7 +19,7 @@ const Node = ({ data }) => {
             nodeData[i]['id'] = nodeData[i]['fromId']
             delete nodeData[i]['fromId']
         }
-        // creates array to store the edges
+        // creates array to store the edges. Does not include targets that do not have a source
         for (let i = 0; i < nodeData.length; i++) {
             if (ids.includes(nodeData[i]['toId'])) {
                 edges.push({source: nodeData[i].id, target: nodeData[i]['toId']})
@@ -27,11 +27,12 @@ const Node = ({ data }) => {
         }
         objData = {nodes: nodeData, links: edges}
         //const jsonData = JSON.stringify(objData)
-        console.log(objData)
+        //console.log(objData)
 
+        // Change color later to sync with chord
         const color = d3.scaleOrdinal(d3.schemeCategory10)
 
-        // chart
+        // Array of objects that hold the nodes and links. Can replace these with the calc version above
         const links = objData.links.map(d => Object.create(d))
         const nodes = objData.nodes.map(d => Object.create(d))
         //console.log(links)
@@ -47,6 +48,7 @@ const Node = ({ data }) => {
             .attr("viewBox", [0, 0, width, height])
             .append("g");
 
+        // clear out old version
         svg.selectAll("*").remove();
 
         const link = svg
@@ -54,7 +56,7 @@ const Node = ({ data }) => {
             .data(links)
             .enter()
             .append("line")
-            .style("stroke", "#69b3a2");
+            .style("stroke", "#69b3a2"); // TODO color edges by sentiment
 
         const node = svg
             .selectAll("circle")
@@ -82,6 +84,19 @@ const Node = ({ data }) => {
 
     }, [data])
 
+    // create sim - setting up the layout
+
+    // draw - making the chart
+
+    // drag - dragging nodes around
+
+    // node - filter using timeStart and timeEnd
+
+    // link - filter using timeStart and timeEnd
+
+
+    // TODO brushing and linking
+    // TODO grouping in node
 
 
     return (

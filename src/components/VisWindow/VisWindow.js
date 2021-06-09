@@ -8,6 +8,8 @@ import CsvPreview from "./CsvPreview";
 const VisWindow = () => {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [startTime, setStartTime] = useState(null)
+    const [endTime, setEndTime] = useState(null)
     // const [selection, setSelection] = useState(
     //     {
     //         groupKey: "fromJobtitle",
@@ -19,6 +21,11 @@ const VisWindow = () => {
     //Loading default data
     useEffect(() => {
         d3.csv("/sample-datasets/enron-v1.csv").then(data => {
+            // TODO make data column a date
+
+            // TODO sort data by date
+            setStartTime(0) //first row
+            setEndTime(1) //last row
             setData(data)
             setLoading(false)
         })
@@ -43,8 +50,9 @@ const VisWindow = () => {
         reader.readAsText(file)
     }
 
-
-
+    // TODO Timeslider
+    // set starttime and endtime for props
+    // make interaction slider here
 
     return (
         <div className="VisWindow">
@@ -52,7 +60,8 @@ const VisWindow = () => {
             {data ? <CsvPreview data={data} /> : "No Data"}
             {loading && <div>loading</div>}
             {!loading && <Chord data={data} />}
-            {!loading && <Node data={data} />}
+            {!loading && <Node data={data} startTime={startTime} endTime={endTime}/>}
+            {/*<div className="slider"></div>*/}
         </div>
     )
 }
