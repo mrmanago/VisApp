@@ -13,7 +13,6 @@ const Node = ({ data, startTime, endTime }) => {
                 dataDate.push(data[i])
             }
         }
-        console.log(dataDate)
 
         let nodes = []
         for (let i = 0; i < dataDate.length; i++) {
