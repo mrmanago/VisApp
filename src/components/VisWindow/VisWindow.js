@@ -60,6 +60,9 @@ const VisWindow = () => {
     // TODO Timeslider
     // set starttime and endtime for props
     // make interaction slider here
+    //****************************************
+    
+    //****************************************
 
     return (
         <div className="VisWindow">
