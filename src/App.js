@@ -1,5 +1,4 @@
 import React from 'react'
-//import Sticky from "wil-react-sticky";
 import './App.css';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
@@ -16,6 +15,9 @@ const App = () => {
         <div className="Box">
           <Header />
           <VisWindow />
+          <div className="Slider">
+          
+          </div>
           <br/>
           <center><Info /></center>
           <center><Footer /></center>

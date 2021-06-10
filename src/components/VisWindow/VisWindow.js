@@ -4,12 +4,16 @@ import * as d3 from "d3";
 import Chord from "./Chord";
 import Node from "./Node";
 import CsvPreview from "./CsvPreview";
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 
 const VisWindow = () => {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [startTime, setStartTime] = useState(null)
-    const [endTime, setEndTime] = useState(null)
+    const [value, setValue] = useState([0,0]);
+    const [minTime, setMinTime] = useState(null)
+    const [maxTime, setMaxTime] = useState(null)
     // const [selection, setSelection] = useState(
     //     {
     //         groupKey: "fromJobtitle",
@@ -21,23 +25,35 @@ const VisWindow = () => {
     //Loading default data
     useEffect(() => {
         d3.csv("/sample-datasets/enron-v1.csv").then(data => {
-            // makes date column a date type
-            let parseDate = d3.timeParse("%Y-%m-%d")
-            data.forEach(d => {
-                d.date = parseDate(d.date)
-            })
-            const firstDate = data.reduce((r, o) => o.date < r.date ? o : r)
-            const lastDate = new Date(firstDate.date)
-            lastDate.setDate(lastDate.getDate() + 400)
-            setStartTime(firstDate.date)
-            setEndTime(lastDate)
-            //setStartTime(parseDate("2000-01-01"))
-            //setEndTime(parseDate("2000-01-15"))
             setData(data)
-            setLoading(false)
         })
         return () => undefined
     }, [])
+
+    // Setting min time, max time, and default values of start and end time
+    useEffect(() => {
+        if (data) {
+            // makes date column a date type
+            let parseDate = d3.timeParse("%Y-%m-%d")
+
+            data.forEach(d => {
+                d.date = parseDate(d.date)
+            })
+
+            const firstDate = data.reduce((r, o) => o.date < r.date ? o : r)
+            const lastDate = data.reduce((r, o) => o.date > r.date ? o : r)
+            const defaultEndTime = new Date(firstDate.date)
+            defaultEndTime.setDate(defaultEndTime.getDate() + 400)
+
+            setMinTime(firstDate.date)
+            setMaxTime(lastDate.date)
+
+            setValue([firstDate.date.getTime(), defaultEndTime.getTime()])
+            //setStartTime(parseDate("2000-01-01"))
+            //setEndTime(parseDate("2000-01-15"))
+            setLoading(false)
+        }
+    }, [data])
 
     //Checking useState works
     useEffect(() => {
@@ -61,14 +77,44 @@ const VisWindow = () => {
     // set starttime and endtime for props
     // make interaction slider here
 
+    const useStyles = makeStyles({
+        root: {
+            width: 1505,
+        },
+    });
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    function valuetext(value) {
+        return `${value}°C`;
+    }
+
+    const classes = useStyles();
+
     return (
         <div className="VisWindow">
             <input type="file" accept=".csv" onChange={onFileChange}/>
             {data ? <CsvPreview data={data} /> : "No Data"}
             {loading && <div>loading</div>}
             {!loading && <Chord data={data} />}
-            {!loading && <Node data={data} startTime={startTime} endTime={endTime}/>}
-            {/*<div className="slider"></div>*/}
+            {!loading && <Node data={data} startTime={value[0]} endTime={value[1]}/>}
+
+            {!loading && <div className={classes.root}>
+                <Typography id="range-slider" gutterBottom>
+                    Timeline
+                </Typography>
+                <Slider
+                    value={value}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="range-slider"
+                    getAriaValueText={valuetext}
+                    min={minTime.getTime()}
+                    max={maxTime.getTime()}
+                />
+            </div>}
         </div>
     )
 }
