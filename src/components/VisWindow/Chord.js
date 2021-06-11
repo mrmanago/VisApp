@@ -3,19 +3,16 @@ import * as d3 from "d3";
 
 //import PropTypes from 'prop-types'
 
-const Chord = ({ data }) => {
+const Chord = ({ data, groups }) => {
     const width = 778
     const height = 778
     const innerRadius = Math.min(width, height) * 0.5 - 90
     const outerRadius = innerRadius + 10
 
     useEffect(() => {
-        // groups (might move this and colors to viswindow so that node-link can sync)
-        const names = Array.from(new Set(data.flatMap(d => [d.fromJobtitle, d.toJobtitle]))).sort(d3.ascending)
-
         // matrix
-        const index = new Map(names.map((name, i) => [name, i]))
-        let matrix = Array.from(index, () => Array(names.length).fill(0))
+        const index = new Map(groups.map((name, i) => [name, i]))
+        let matrix = Array.from(index, () => Array(groups.length).fill(0))
         for (const {fromJobtitle, toJobtitle} of data) {
             matrix[index.get(fromJobtitle)][index.get(toJobtitle)] += 1
         }
@@ -33,7 +30,7 @@ const Chord = ({ data }) => {
             .radius(innerRadius - 1)
             .padAngle(1 / innerRadius)
 
-        const color = d3.scaleOrdinal(names, d3.quantize(d3.interpolateRainbow, names.length))
+        const color = d3.scaleOrdinal(groups, d3.quantize(d3.interpolateRainbow, groups.length))
 
         // chart
         const svg = d3.select("svg")
@@ -51,7 +48,7 @@ const Chord = ({ data }) => {
             .join("g");
 
         group.append("path")
-            .attr("fill", d => color(names[d.index]))
+            .attr("fill", d => color(groups[d.index]))
             .attr("d", arc);
 
         group.append("text")
@@ -63,7 +60,7 @@ const Chord = ({ data }) => {
                 ${d.angle > Math.PI ? "rotate(180)" : ""}
             `)
             .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
-            .text(d => names[d.index])
+            .text(d => groups[d.index])
             .style("font-size", "1.2em");
 
         svg.append("g")
@@ -72,7 +69,7 @@ const Chord = ({ data }) => {
             .data(chords)
             .join("path")
             .style("mix-blend-mode", "multiply")
-            .attr("fill", d => color(names[d.target.index]))
+            .attr("fill", d => color(groups[d.target.index]))
             .attr("d", ribbon)
             .append("title")
 
