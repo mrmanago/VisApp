@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import * as d3 from "d3";
 //import PropTypes from 'prop-types'
 
 const Node = ({ data, startTime, endTime }) => {
     const [nodeTemp, setNodeTemp] = useState(null)
+    const brush = useRef()
     const width = 778
     const height = 778
     const radius = 1
@@ -87,6 +88,7 @@ const Node = ({ data, startTime, endTime }) => {
             .force("center", d3.forceCenter(width / 2, height / 2))
             .on("tick", ticked)
 
+
         // Clear old version
         d3.select(".node-diagram").selectAll("*").remove()
 
@@ -129,6 +131,19 @@ const Node = ({ data, startTime, endTime }) => {
 
         setNodeTemp(node)
 
+        function brushed(event) {
+            let selection = event.selection;
+            node.classed("selected", selection && function(d) {
+                return selection[0][0] <= d.x && d.x < selection[1][0]
+                    && selection[0][1] <= d.y && d.y < selection[1][1];
+            })
+        }
+        const brush = svg.append('g')
+            .attr("class", "node")
+            .call(d3.brush()
+                .extent([[0,0], [width, height]])
+                .on("start brush end", brushed))
+
         simulation.nodes(nodes);
         simulation.force("link").links(links)
         simulation.alpha(1).restart().tick()
@@ -141,7 +156,9 @@ const Node = ({ data, startTime, endTime }) => {
 
     return (
         <div className="Vis2">
-            <svg className="node-diagram"/>
+            <svg className="node-diagram">
+                {/*<g ref={brush}/>*/}
+            </svg>
         </div>
     )   
 

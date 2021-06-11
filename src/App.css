@@ -229,3 +229,7 @@ a:active {
   margin-left: auto;
   margin-right: auto;
 }
+
+.selected {
+  stroke: red;
+}

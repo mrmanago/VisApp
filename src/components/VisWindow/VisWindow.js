@@ -14,6 +14,7 @@ const VisWindow = () => {
     const [value, setValue] = useState([0,0]);
     const [minTime, setMinTime] = useState(null)
     const [maxTime, setMaxTime] = useState(null)
+    const [selection, setSelection] = useState(null)
     // const [selection, setSelection] = useState(
     //     {
     //         groupKey: "fromJobtitle",
@@ -93,12 +94,16 @@ const VisWindow = () => {
 
     const classes = useStyles();
 
+    const updateSelection = () => {
+        setSelection(selection)
+    }
+
     return (
         <div className="VisWindow">
             <input type="file" accept=".csv" onChange={onFileChange}/>
             {data ? <CsvPreview data={data} /> : "No Data"}
             {loading && <div>loading</div>}
-            {!loading && <Chord data={data} />}
+            {!loading && <Chord data={data} startTime={value[0]} endTime={value[1]} selection={selection} updateSelection={updateSelection}/>}
             {!loading && <Node data={data} startTime={value[0]} endTime={value[1]}/>}
 
             {!loading && <div className={classes.root}>
