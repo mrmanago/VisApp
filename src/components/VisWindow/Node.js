@@ -2,9 +2,8 @@ import React, {useEffect, useRef, useState} from 'react'
 import * as d3 from "d3";
 //import PropTypes from 'prop-types'
 
-const Node = ({ data, startTime, endTime }) => {
+const Node = ({ data, groups, selection, updateSelection }) => {
     const [nodeTemp, setNodeTemp] = useState(null)
-    const brush = useRef()
     const width = 778
     const height = 778
     const radius = 1
@@ -35,39 +34,33 @@ const Node = ({ data, startTime, endTime }) => {
     }
 
     useEffect(() => {
-        const dataDate = []
-        for (let i = 0; i < data.length; i++) {
-            if (!(data[i].date < startTime || data[i].date > endTime)) {
-                dataDate.push(data[i])
-            }
-        }
-
         let nodes = []
-        for (let i = 0; i < dataDate.length; i++) {
-            if (!nodes.some(e => e.id === dataDate[i]['fromId'])) {
-                nodes.push({id: dataDate[i]['fromId'], Email: dataDate[i]['fromEmail'], JobTitle: dataDate[i]['fromJobtitle']})
+        for (let i = 0; i < data.length; i++) {
+            if (!nodes.some(e => e.id === data[i]['fromId'])) {
+                nodes.push({id: data[i]['fromId'], Email: data[i]['fromEmail'], JobTitle: data[i]['fromJobtitle']})
             }
-            if (!nodes.some(e => e.id === dataDate[i]['toId'])) {
-                nodes.push({id: dataDate[i]['toId'], Email: dataDate[i]['toEmail'], JobTitle: dataDate[i]['toJobtitle']})
+            if (!nodes.some(e => e.id === data[i]['toId'])) {
+                nodes.push({id: data[i]['toId'], Email: data[i]['toEmail'], JobTitle: data[i]['toJobtitle']})
             }
         }
 
         // creates array to store the links. If there is not a node for the outgoing edge it creates one
         let linksAll = []
-        for (let i = 0; i < dataDate.length; i++) {
-            linksAll.push({source: dataDate[i]['fromId'], target: dataDate[i]['toId'], date: dataDate[i]['date'], key:dataDate[i]['fromId']+dataDate[i]['toId']})
+        for (let i = 0; i < data.length; i++) {
+            linksAll.push({source: data[i]['fromId'], target: data[i]['toId'], date: data[i]['date'], key:data[i]['fromId']+data[i]['toId']})
         }
 
         let links = []
         for (let i = 0; i < linksAll.length; i++) {
             if (!links.some(e => e.key === linksAll[i]['key'])) {
-                links.push({source: dataDate[i]['fromId'], target: dataDate[i]['toId'], key:dataDate[i]['fromId']+dataDate[i]['toId'], value: 1})
+                links.push({source: data[i]['fromId'], target: data[i]['toId'], key:data[i]['fromId']+data[i]['toId'], value: 1, sentiment: data[i]['sentiment']})
             } else {
+                links.find(e => e.key === linksAll[i]['key']).value++
                 links.find(e => e.key === linksAll[i]['key']).value++
             }
         }
 
-        const color = d3.scaleOrdinal(d3.schemeCategory10)
+
 
         const ticked = () => {
             link
@@ -92,6 +85,8 @@ const Node = ({ data, startTime, endTime }) => {
         // Clear old version
         d3.select(".node-diagram").selectAll("*").remove()
 
+        const scale = d3.scaleOrdinal(d3.schemeCategory10);
+
         const svg = d3.select(".node-diagram")
             .attr("viewBox", [0, 0, width, height])
             .append("g");
@@ -101,7 +96,7 @@ const Node = ({ data, startTime, endTime }) => {
             .data(links)
             .enter()
             .append("line")
-            .style("stroke", "#69b3a2"); // TODO color links by sentiment
+            .style("stroke", "#3bb1a9"); // TODO color links by sentiment
 
         let node = svg
             .selectAll("circle")
@@ -109,7 +104,7 @@ const Node = ({ data, startTime, endTime }) => {
             .enter()
             .append("circle")
             .attr("r", 5)
-            .attr("fill", color) // TODO base color on group
+            .attr("fill", d => scale(d.JobTitle))// TODO base color on group
             .call(drag(simulation))
 
         if (nodeTemp) {
@@ -131,7 +126,7 @@ const Node = ({ data, startTime, endTime }) => {
 
         setNodeTemp(node)
 
-        function brushed(event) {
+        const brushed = (event) => {
             let selection = event.selection;
             node.classed("selected", selection && function(d) {
                 return selection[0][0] <= d.x && d.x < selection[1][0]
@@ -148,7 +143,7 @@ const Node = ({ data, startTime, endTime }) => {
         simulation.force("link").links(links)
         simulation.alpha(1).restart().tick()
         ticked()
-    }, [data, startTime, endTime])
+    }, [data])
 
     useEffect(() => {
 
@@ -156,9 +151,7 @@ const Node = ({ data, startTime, endTime }) => {
 
     return (
         <div className="Vis2">
-            <svg className="node-diagram">
-                {/*<g ref={brush}/>*/}
-            </svg>
+            <svg className="node-diagram" />
         </div>
     )   
 

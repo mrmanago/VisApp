@@ -10,11 +10,14 @@ import Slider from '@material-ui/core/Slider';
 
 const VisWindow = () => {
     const [data, setData] = useState(null)
+    const [dataFiltered, setDataFiltered] = useState([])
     const [loading, setLoading] = useState(true)
     const [value, setValue] = useState([0,0]);
     const [minTime, setMinTime] = useState(null)
     const [maxTime, setMaxTime] = useState(null)
     const [selection, setSelection] = useState(null)
+    const [groups, setGroups] = useState([])
+    const [groupColor, setGroupColor] = useState(null)
     // const [selection, setSelection] = useState(
     //     {
     //         groupKey: "fromJobtitle",
@@ -50,6 +53,9 @@ const VisWindow = () => {
             setMaxTime(lastDate.date)
 
             setValue([firstDate.date.getTime(), defaultEndTime.getTime()])
+            const names = Array.from(new Set(data.flatMap(d => [d.fromJobtitle, d.toJobtitle]))).sort(d3.ascending)
+            setGroups(names)
+
             //setStartTime(parseDate("2000-01-01"))
             //setEndTime(parseDate("2000-01-15"))
             setLoading(false)
@@ -59,9 +65,15 @@ const VisWindow = () => {
     //Checking useState works
     useEffect(() => {
         if (data) {
-            console.log(data)
+            const dataDate = []
+            for (let i = 0; i < data.length; i++) {
+                if (!(data[i].date < value[0] || data[i].date > value[1])) {
+                    dataDate.push(data[i])
+                }
+            }
+            setDataFiltered(dataDate)
         }
-    }, [data])
+    }, [data, value])
 
     // Read File
     const onFileChange = (e) => {
@@ -98,13 +110,15 @@ const VisWindow = () => {
         setSelection(selection)
     }
 
+
+
     return (
         <div className="VisWindow">
             <input type="file" accept=".csv" onChange={onFileChange}/>
             {data ? <CsvPreview data={data} /> : "No Data"}
             {loading && <div>loading</div>}
-            {!loading && <Chord data={data} startTime={value[0]} endTime={value[1]} selection={selection} updateSelection={updateSelection}/>}
-            {!loading && <Node data={data} startTime={value[0]} endTime={value[1]}/>}
+            {!loading && <Chord data={dataFiltered} groups={groups} selection={selection} updateSelection={updateSelection}/>}
+            {!loading && <Node data={dataFiltered} groups={groups} selection={selection} updateSelection={updateSelection}/>}
 
             {!loading && <div className={classes.root}>
                 <Typography id="range-slider" gutterBottom>
