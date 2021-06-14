@@ -18,13 +18,6 @@ const VisWindow = () => {
     const [selection, setSelection] = useState(null)
     const [groups, setGroups] = useState([])
     const [groupColor, setGroupColor] = useState(null)
-    // const [selection, setSelection] = useState(
-    //     {
-    //         groupKey: "fromJobtitle",
-    //         source: "fromId",
-    //         outgoingId: "toId"
-    //     }
-    // )
 
     //Loading default data
     useEffect(() => {
@@ -56,13 +49,11 @@ const VisWindow = () => {
             const names = Array.from(new Set(data.flatMap(d => [d.fromJobtitle, d.toJobtitle]))).sort(d3.ascending)
             setGroups(names)
 
-            //setStartTime(parseDate("2000-01-01"))
-            //setEndTime(parseDate("2000-01-15"))
             setLoading(false)
         }
     }, [data])
 
-    //Checking useState works
+    // Filtering the data based on the timeslider
     useEffect(() => {
         if (data) {
             const dataDate = []
@@ -86,6 +77,7 @@ const VisWindow = () => {
         reader.readAsText(file)
     }
 
+    // For the slider
     const useStyles = makeStyles({
         root: {
             width: 1505,
@@ -104,6 +96,7 @@ const VisWindow = () => {
 
     const updateSelection = (selection) => {
         setSelection(selection)
+        console.log(selection)
     }
 
     return (

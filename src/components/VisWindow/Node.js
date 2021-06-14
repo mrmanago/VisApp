@@ -44,12 +44,13 @@ const Node = ({ data, groups, selection, updateSelection }) => {
             }
         }
 
-        // creates array to store the links. If there is not a node for the outgoing edge it creates one
+        // creates array to store the links.
         let linksAll = []
         for (let i = 0; i < data.length; i++) {
             linksAll.push({source: data[i]['fromId'], target: data[i]['toId'], date: data[i]['date'], key:data[i]['fromId']+data[i]['toId']})
         }
 
+        // non repetitive links
         let links = []
         for (let i = 0; i < linksAll.length; i++) {
             if (!links.some(e => e.key === linksAll[i]['key'])) {
@@ -59,8 +60,6 @@ const Node = ({ data, groups, selection, updateSelection }) => {
                 links.find(e => e.key === linksAll[i]['key']).value++
             }
         }
-
-
 
         const ticked = () => {
             link
@@ -159,10 +158,6 @@ const Node = ({ data, groups, selection, updateSelection }) => {
         simulation.alpha(1).restart().tick()
         ticked()
     }, [data])
-
-    useEffect(() => {
-
-    }, [])
 
     return (
         <div className="Vis2">

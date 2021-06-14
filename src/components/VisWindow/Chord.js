@@ -3,11 +3,14 @@ import * as d3 from "d3";
 
 //import PropTypes from 'prop-types'
 
-const Chord = ({ data, groups }) => {
+const Chord = ({ data, groups, selection }) => {
     const width = 778
     const height = 778
     const innerRadius = Math.min(width, height) * 0.5 - 90
     const outerRadius = innerRadius + 10
+
+    //TODO take selection variable make it so that it selects the ribbon/node that has the same jobtitle
+
 
     useEffect(() => {
         // matrix
@@ -74,6 +77,11 @@ const Chord = ({ data, groups }) => {
             .append("title")
 
     }, [data, innerRadius, outerRadius])
+
+    useEffect(() => {
+        // call the click handler based on the input of the array
+
+    }, [selection])
 
     return (
         <div className="Vis1">
