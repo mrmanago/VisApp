@@ -86,10 +86,6 @@ const VisWindow = () => {
         reader.readAsText(file)
     }
 
-    // TODO Timeslider
-    // set starttime and endtime for props
-    // make interaction slider here
-
     const useStyles = makeStyles({
         root: {
             width: 1505,
@@ -106,11 +102,9 @@ const VisWindow = () => {
 
     const classes = useStyles();
 
-    const updateSelection = () => {
+    const updateSelection = (selection) => {
         setSelection(selection)
     }
-
-
 
     return (
         <div className="VisWindow">

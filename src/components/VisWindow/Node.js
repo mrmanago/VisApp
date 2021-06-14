@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import * as d3 from "d3";
 //import PropTypes from 'prop-types'
 
@@ -104,7 +104,7 @@ const Node = ({ data, groups, selection, updateSelection }) => {
             .enter()
             .append("circle")
             .attr("r", 5)
-            .attr("fill", d => scale(d.JobTitle))// TODO base color on group
+            .attr("fill", d => scale(d.JobTitle))
             .call(drag(simulation))
 
         if (nodeTemp) {
@@ -126,19 +126,34 @@ const Node = ({ data, groups, selection, updateSelection }) => {
 
         setNodeTemp(node)
 
+        //Brush
         const brushed = (event) => {
             let selection = event.selection;
-            node.classed("selected", selection && function(d) {
-                return selection[0][0] <= d.x && d.x < selection[1][0]
-                    && selection[0][1] <= d.y && d.y < selection[1][1];
-            })
+            if (selection) {
+                const [[x0, y0], [x1, y1]] = selection
+                const nodeSelection = nodes.filter(d => {
+                    return d.x >= x0 &&
+                           d.x <= x1 &&
+                           d.y >= y0 &&
+                           d.y <= y1
+                })
+                node.classed("selected", selection && function(d) {
+                    return selection[0][0] <= d.x && d.x < selection[1][0]
+                        && selection[0][1] <= d.y && d.y < selection[1][1];
+                })
+                updateSelection(nodeSelection)
+            } else {
+                updateSelection(nodes)
+            }
         }
+
         const brush = svg.append('g')
             .attr("class", "node")
             .call(d3.brush()
                 .extent([[0,0], [width, height]])
                 .on("start brush end", brushed))
 
+        // Start sim
         simulation.nodes(nodes);
         simulation.force("link").links(links)
         simulation.alpha(1).restart().tick()
