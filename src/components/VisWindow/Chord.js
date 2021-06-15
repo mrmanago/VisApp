@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 //import PropTypes from 'prop-types'
 
-const Chord = ({ data, groups, selection }) => {
+const Chord = ({ data, groups, selection, updateSelection }) => {
     const width = 778
     const height = 778
     const innerRadius = Math.min(width, height) * 0.5 - 90
@@ -38,20 +38,21 @@ const Chord = ({ data, groups, selection }) => {
         const svg = d3.select("svg")
             .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
-        svg.selectAll("*").remove();
+        svg.selectAll("*").remove()
 
-        const chords = chord(matrix);
+        const chords = chord(matrix)
+
 
         const group = svg.append("g")
             .attr("font-size", 10)
             .attr("font-family", "sans-serif")
             .selectAll("g")
             .data(chords.groups)
-            .join("g");
+            .join("g")
 
         group.append("path")
             .attr("fill", d => color(groups[d.index]))
-            .attr("d", arc);
+            .attr("d", arc)
 
         group.append("text")
             .each(d => (d.angle = (d.startAngle + d.endAngle) / 2))
@@ -63,7 +64,7 @@ const Chord = ({ data, groups, selection }) => {
             `)
             .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
             .text(d => groups[d.index])
-            .style("font-size", "1.2em");
+            .style("font-size", "1.2em")
 
         svg.append("g")
             .attr("fill-opacity", 0.75)
@@ -75,6 +76,22 @@ const Chord = ({ data, groups, selection }) => {
             .attr("d", ribbon)
             .append("title")
 
+        const brushed = (event) => {
+            let selection = event.target;
+            if (selection) {
+                console.log(group)
+                const groupSelection = group['_groups'][0].map(d => d.textContent)
+                updateSelection(groupSelection)
+            } else {
+                updateSelection(groups)
+            }
+        }
+
+        const brush = svg.append('g')
+            .call(d3.brush()
+                .extent([[-width / 2, -height / 2], [width, height]])
+                .on("start brush end", brushed))
+
     }, [data, innerRadius, outerRadius])
 
     useEffect(() => {
@@ -84,14 +101,11 @@ const Chord = ({ data, groups, selection }) => {
             .attr("fill-opacity", 0.75);
 
         if(selection!=null && selection.length>0) {
-            const selectedGroups = [...new Set(selection.map((d)=>d.JobTitle))];
-
-            d3.select("svg")
+                        d3.select("svg")
                 .selectAll("path")
-                .filter((d) => d.source != null && !selectedGroups.includes(groups[d.source.index]))
+                .filter((d) => d.source != null && !selection.includes(groups[d.source.index]))
                 .attr("fill-opacity", 0);
         }
-
     }, [selection])
 
     return (

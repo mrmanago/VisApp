@@ -95,8 +95,8 @@ const VisWindow = () => {
     const classes = useStyles();
 
     const updateSelection = (selection) => {
-        setSelection(selection)
         console.log(selection)
+        setSelection(selection)
     }
 
     return (
