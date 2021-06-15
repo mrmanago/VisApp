@@ -76,22 +76,6 @@ const Chord = ({ data, groups, selection, updateSelection }) => {
             .attr("d", ribbon)
             .append("title")
 
-        const brushed = (event) => {
-            let selection = event.target;
-            if (selection) {
-                console.log(group)
-                const groupSelection = group['_groups'][0].map(d => d.textContent)
-                updateSelection(groupSelection)
-            } else {
-                updateSelection(groups)
-            }
-        }
-
-        const brush = svg.append('g')
-            .call(d3.brush()
-                .extent([[-width / 2, -height / 2], [width, height]])
-                .on("start brush end", brushed))
-
     }, [data, innerRadius, outerRadius])
 
     useEffect(() => {
