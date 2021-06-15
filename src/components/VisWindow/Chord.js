@@ -11,7 +11,6 @@ const Chord = ({ data, groups, selection }) => {
 
     //TODO take selection variable make it so that it selects the ribbon/node that has the same jobtitle
 
-
     useEffect(() => {
         // matrix
         const index = new Map(groups.map((name, i) => [name, i]))
@@ -79,7 +78,19 @@ const Chord = ({ data, groups, selection }) => {
     }, [data, innerRadius, outerRadius])
 
     useEffect(() => {
-        // call the click handler based on the input of the array
+
+        d3.select("svg")
+            .selectAll("path")
+            .attr("fill-opacity", 0.75);
+
+        if(selection!=null && selection.length>0) {
+            const selectedGroups = [...new Set(selection.map((d)=>d.JobTitle))];
+
+            d3.select("svg")
+                .selectAll("path")
+                .filter((d) => d.source != null && !selectedGroups.includes(groups[d.source.index]))
+                .attr("fill-opacity", 0);
+        }
 
     }, [selection])
 
