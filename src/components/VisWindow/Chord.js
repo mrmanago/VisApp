@@ -3,14 +3,13 @@ import * as d3 from "d3";
 
 //import PropTypes from 'prop-types'
 
-const Chord = ({ data, groups, selection }) => {
+const Chord = ({ data, groups, selection, updateSelection }) => {
     const width = 778
     const height = 778
     const innerRadius = Math.min(width, height) * 0.5 - 90
     const outerRadius = innerRadius + 10
 
     //TODO take selection variable make it so that it selects the ribbon/node that has the same jobtitle
-
 
     useEffect(() => {
         // matrix
@@ -39,20 +38,21 @@ const Chord = ({ data, groups, selection }) => {
         const svg = d3.select("svg")
             .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
-        svg.selectAll("*").remove();
+        svg.selectAll("*").remove()
 
-        const chords = chord(matrix);
+        const chords = chord(matrix)
+
 
         const group = svg.append("g")
             .attr("font-size", 10)
             .attr("font-family", "sans-serif")
             .selectAll("g")
             .data(chords.groups)
-            .join("g");
+            .join("g")
 
         group.append("path")
             .attr("fill", d => color(groups[d.index]))
-            .attr("d", arc);
+            .attr("d", arc)
 
         group.append("text")
             .each(d => (d.angle = (d.startAngle + d.endAngle) / 2))
@@ -64,7 +64,7 @@ const Chord = ({ data, groups, selection }) => {
             `)
             .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
             .text(d => groups[d.index])
-            .style("font-size", "1.2em");
+            .style("font-size", "1.2em")
 
         svg.append("g")
             .attr("fill-opacity", 0.75)
@@ -79,8 +79,17 @@ const Chord = ({ data, groups, selection }) => {
     }, [data, innerRadius, outerRadius])
 
     useEffect(() => {
-        // call the click handler based on the input of the array
 
+        d3.select("svg")
+            .selectAll("path")
+            .attr("fill-opacity", 0.75);
+
+        if(selection!=null && selection.length>0) {
+                        d3.select("svg")
+                .selectAll("path")
+                .filter((d) => d.source != null && !selection.includes(groups[d.source.index]))
+                .attr("fill-opacity", 0);
+        }
     }, [selection])
 
     return (

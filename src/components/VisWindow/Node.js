@@ -140,9 +140,11 @@ const Node = ({ data, groups, selection, updateSelection }) => {
                     return selection[0][0] <= d.x && d.x < selection[1][0]
                         && selection[0][1] <= d.y && d.y < selection[1][1];
                 })
-                updateSelection(nodeSelection)
+                const selectedGroups = [...new Set(nodeSelection.map((d)=>d.JobTitle))]
+                updateSelection(selectedGroups)
             } else {
-                updateSelection(nodes)
+                const selectedGroups = [...new Set(nodes.map((d)=>d.JobTitle))]
+                updateSelection(selectedGroups)
             }
         }
 

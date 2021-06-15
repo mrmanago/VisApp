@@ -96,7 +96,6 @@ const VisWindow = () => {
 
     const updateSelection = (selection) => {
         setSelection(selection)
-        console.log(selection)
     }
 
     return (
