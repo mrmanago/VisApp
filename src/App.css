@@ -91,7 +91,7 @@ p {
   left: 90px;
   top: 10px;
   width: 1590px;
-  height: 2400px;
+  height: 3000px;
   position: absolute;
   background: #1F2933;
   border-radius: 10px;
@@ -121,6 +121,13 @@ p {
   background-color: #ffffff;
 }
 
+.Vis3 {
+  float: right;
+  width: 778px;
+  height: 778px;
+  background-color: #ffffff;
+}
+
 .VisWindow {
   margin-top: 200px;
   margin-left: auto;
@@ -130,6 +137,17 @@ p {
   min-height: fit-content;
   background-color: #1F2933;
 }
+
+.VisWindow2 {
+  margin-top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 98%;
+  height: 778px;
+  min-height: fit-content;
+  background-color: #1F2933;
+}
+
 
 .tooltip {
   position: absolute;
