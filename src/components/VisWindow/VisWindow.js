@@ -7,6 +7,7 @@ import CsvPreview from "./CsvPreview";
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import SummaryNode from "./SummaryNode";
 
 const VisWindow = () => {
     const [data, setData] = useState(null)
@@ -120,6 +121,8 @@ const VisWindow = () => {
                     max={maxTime.getTime()}
                 />
             </div>}
+
+            <SummaryNode />
         </div>
     )
 }

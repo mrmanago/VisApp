@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component, useEffect} from 'react';
 import * as d3 from 'd3';
 
-class SummaryNode extends Component {
+const SummaryNode = () => {
 
-    componentDidMount(){
-
+    useEffect(() => {
         d3.json("/sample-datasets/node-link-value.json", function(error,data) {
             if (error) throw error;
 
             const width = 1024,
                 height = 640;
 
-            let beautifulVariable=true;
+            let beautifulVariable = true;
 
             //Initializing chart
             const svg = d3.select('.chart')
@@ -68,17 +67,17 @@ class SummaryNode extends Component {
             }
 
             const mouseOver = (event, d) => {
-                tooltip.html("id:"+d.id+"<br/> email:"+d.email+"<br/> Job Title:"+d.jobTitle)
+                tooltip.html("id:" + d.id + "<br/> email:" + d.email + "<br/> Job Title:" + d.jobTitle)
                     .transition()
                     .delay(100)
                     .duration(1000)
-                    .style('left', event.pageX + 5 +'px')
+                    .style('left', event.pageX + 5 + 'px')
                     .style('top', event.pageY + 5 + 'px')
                     .style('opacity', .9);
             }
 
             const mouseClick = d => {
-                if(beautifulVariable) {
+                if (beautifulVariable) {
                     node
                         .filter((c) => {
                             c.selected = true
@@ -104,7 +103,7 @@ class SummaryNode extends Component {
                         .filter(c => c.selected)
                         .attr("opacity", 0);
                 }
-                beautifulVariable=false;
+                beautifulVariable = false;
             }
 
             const mouseOut = () => {
@@ -113,10 +112,10 @@ class SummaryNode extends Component {
                     .style('top', '400px');
             }
 
-            const mouseClickButton =() => {
-                beautifulVariable=true;
+            const mouseClickButton = () => {
+                beautifulVariable = true;
                 node.attr("opacity", 1);
-                link.style("visibility","visible");
+                link.style("visibility", "visible");
             }
 
             //Creating links
@@ -125,7 +124,7 @@ class SummaryNode extends Component {
                 .data(data.links).enter()
                 .append('line')
                 .style("stroke", "#aaa")
-                .attr('stroke-width', (d)=>d.weight/100);
+                .attr('stroke-width', (d) => d.weight / 100);
 
             //Creating nodes
             const node = svg
@@ -146,14 +145,26 @@ class SummaryNode extends Component {
             //Setting location when ticked
             const ticked = () => {
                 link
-                    .attr("x1", d => { return d.source.x; })
-                    .attr("y1", d => { return d.source.y; })
-                    .attr("x2", d => { return d.target.x; })
-                    .attr("y2", d => { return d.target.y; });
+                    .attr("x1", d => {
+                        return d.source.x;
+                    })
+                    .attr("y1", d => {
+                        return d.source.y;
+                    })
+                    .attr("x2", d => {
+                        return d.target.x;
+                    })
+                    .attr("y2", d => {
+                        return d.target.y;
+                    });
 
                 node
-                    .attr("cx", function (d) { return d.x; })
-                    .attr("cy", function(d) { return d.y; });
+                    .attr("cx", function (d) {
+                        return d.x;
+                    })
+                    .attr("cy", function (d) {
+                        return d.y;
+                    });
             };
 
             //Starting simulation
@@ -163,7 +174,7 @@ class SummaryNode extends Component {
             simulation.force('link')
                 .links(data.links);
 
-            const rect = svg.append('rect','text')
+            const rect = svg.append('rect', 'text')
                 .attr("x", 0)
                 .attr("y", 550)
                 .attr("width", 60)
@@ -178,17 +189,12 @@ class SummaryNode extends Component {
                 .style("font-size", 19)
                 .text("Reset")
                 .on('click', mouseClickButton);
-        });
-    }
+        })
+    }, [])
 
-    render(){
-        return (
-            <div className='Vis3'>
-                    <svg className='chart'>
-                    </svg>
-            </div>
-        );
-    }
-
+    return (
+        <div className='Vis3'>
+            <svg className='chart' />
+        </div>)
 }
 export default SummaryNode

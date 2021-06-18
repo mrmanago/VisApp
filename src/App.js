@@ -5,8 +5,6 @@ import Navbar from './components/Navbar';
 import Info from './components/Info';
 import Footer from './components/Footer';
 import VisWindow from "./components/VisWindow/VisWindow";
-import SummaryNode from "./components/VisWindow/SummaryNode";
-import VisWindow2 from "./components/VisWindow/VisWindow2";
 
 const App = () => {
   return (
@@ -19,7 +17,6 @@ const App = () => {
           <VisWindow />
           <div className="Slider">
           </div>
-          <VisWindow2 />
           <br/>
           <center><Info /></center>
           <center><Footer /></center>
