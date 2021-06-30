@@ -4,11 +4,10 @@ import * as d3 from 'd3';
 const SummaryNode = () => {
 
     useEffect(() => {
-        d3.json("/sample-datasets/node-link-value.json", function(error,data) {
-            if (error) throw error;
+        d3.json("/sample-datasets/node-link-value.json").then(data => {
 
-            const width = 1024,
-                height = 640;
+            const width = 778,
+                height = 778;
 
             let beautifulVariable = true;
 
@@ -16,31 +15,23 @@ const SummaryNode = () => {
             const svg = d3.select('.chart')
                 .attr('width', width)
                 .attr('height', height)
-                .append('g');
+                .append('g')
+                .call(d3.zoom().on("zoom", function(event) {
+                    svg.attr("transform", event.transform)
+                }));
 
             //Creating tooltip
             const tooltip = d3.select('.Vis3')
                 .append('div')
                 .attr('class', 'tooltip')
                 .html('Tooltip');
-            const marker = d3.select("svg").append("svg:defs")
-                .append("svg:marker")
-                .attr("id", "triangle")
-                .attr("refX", 6)
-                .attr("refY", 6)
-                .attr("markerWidth", 30)
-                .attr("markerHeight", 30)
-                .attr("orient", "auto")
-                .append("path")
-                .attr("d", "M 0 0 12 6 0 12 3 6")
-                .style("fill", "red");
 
             const scale = d3.scaleOrdinal(d3.schemeCategory10);
 
 
             //Initializing force simulation
             const simulation = d3.forceSimulation()
-                .force('link', d3.forceLink())
+                .force('link', d3.forceLink().id(d => d.id))
                 .force('charge', d3.forceManyBody().strength(-50))
                 .force('collide', d3.forceCollide().radius(20))
                 .force('center', d3.forceCenter(width / 2, height / 2))
@@ -85,12 +76,12 @@ const SummaryNode = () => {
 
                     link
                         .filter((c) => {
-                            if (c.target.id == d.id) {
+                            if (c.target.id === d.id) {
 
                                 c.source.selected = false;
                                 c.target.selected = false;
                             }
-                            if (c.source.id == d.id) {
+                            if (c.source.id === d.id) {
 
                                 c.source.selected = false;
                                 c.target.selected = false;
@@ -119,7 +110,7 @@ const SummaryNode = () => {
             }
 
             //Creating links
-            const link = svg
+            let link = svg
                 .selectAll('line')
                 .data(data.links).enter()
                 .append('line')
@@ -127,7 +118,7 @@ const SummaryNode = () => {
                 .attr('stroke-width', (d) => d.weight / 100);
 
             //Creating nodes
-            const node = svg
+            let node = svg
                 .selectAll('circle')
                 .data(data.nodes).enter()
                 .append('circle')
@@ -145,26 +136,14 @@ const SummaryNode = () => {
             //Setting location when ticked
             const ticked = () => {
                 link
-                    .attr("x1", d => {
-                        return d.source.x;
-                    })
-                    .attr("y1", d => {
-                        return d.source.y;
-                    })
-                    .attr("x2", d => {
-                        return d.target.x;
-                    })
-                    .attr("y2", d => {
-                        return d.target.y;
-                    });
+                    .attr("x1", d => {return d.source.x;})
+                    .attr("y1", d => {return d.source.y;})
+                    .attr("x2", d => {return d.target.x;})
+                    .attr("y2", d => {return d.target.y;});
 
                 node
-                    .attr("cx", function (d) {
-                        return d.x;
-                    })
-                    .attr("cy", function (d) {
-                        return d.y;
-                    });
+                    .attr("cx", function (d) {return d.x;})
+                    .attr("cy", function (d) {return d.y;});
             };
 
             //Starting simulation
@@ -172,7 +151,7 @@ const SummaryNode = () => {
                 .on('tick', ticked);
 
             simulation.force('link')
-                .links(data.links);
+                .links(data);
 
             const rect = svg.append('rect', 'text')
                 .attr("x", 0)
