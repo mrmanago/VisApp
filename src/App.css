@@ -122,7 +122,7 @@ p {
 }
 
 .VisWindow {
-  margin-top: 200px;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   width: 98%;
@@ -217,17 +217,30 @@ a:active {
 }
 
 /****** Time Slider *******/
-.Slider {
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
+.hi {
+  color: rgba(255, 0, 0, 0);
 }
 
-/****** Time Slider *******/
+.MuiTypography-body1 {
+  margin-top: 50px;
+}
+.timeline-text{
+  margin-top: 10px;
+}
 .Slider {
   margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+span [class^="PrivateValueLabel-circle"] {
+  width: max-content !important;
+  height: fit-content !important;
+  transform: rotate(0deg) translateX(-35%) translateY(5px) !important;
+  border-radius: 0% 0% 0% 0% !important ;
+}
+
+span [class^="PrivateValueLabel-label"] {
+  margin: 9px;
+  transform: rotate(0deg) !important;
 }
 
 .selected {

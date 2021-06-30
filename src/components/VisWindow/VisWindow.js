@@ -32,16 +32,16 @@ const VisWindow = () => {
         if (data) {
             // makes date column a date type
             let parseDate = d3.timeParse("%Y-%m-%d")
-
+            console.log(parseDate)
             data.forEach(d => {
                 d.date = parseDate(d.date)
             })
-
+            
             const firstDate = data.reduce((r, o) => o.date < r.date ? o : r)
             const lastDate = data.reduce((r, o) => o.date > r.date ? o : r)
             const defaultEndTime = new Date(firstDate.date)
             defaultEndTime.setDate(defaultEndTime.getDate() + 400)
-
+            console.log(firstDate, "      ", firstDate.date, "    ", firstDate.date.getTime())
             setMinTime(firstDate.date)
             setMaxTime(lastDate.date)
 
@@ -92,6 +92,10 @@ const VisWindow = () => {
         return `${value}°C`;
     }
 
+    function poop(value) {
+        return new Date(value).toDateString();
+    }
+
     const classes = useStyles();
 
     const updateSelection = (selection) => {
@@ -108,17 +112,21 @@ const VisWindow = () => {
 
             {!loading && <div className={classes.root}>
                 <Typography id="range-slider" gutterBottom>
-                    Timeline
                 </Typography>
-                <Slider
-                    value={value}
-                    onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    aria-labelledby="range-slider"
-                    getAriaValueText={valuetext}
-                    min={minTime.getTime()}
-                    max={maxTime.getTime()}
-                />
+                <div className="hi">hi</div>
+                <div className="timeline-text">Timeline</div>
+                <div className="Slider">
+                    <Slider
+                        value={value}
+                        onChange={handleChange}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={poop}
+                        aria-labelledby="range-slider"
+                        getAriaValueText={valuetext}
+                        min={minTime.getTime()}
+                        max={maxTime.getTime()}
+                    />
+                </div>
             </div>}
         </div>
     )
