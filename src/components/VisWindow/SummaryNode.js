@@ -79,11 +79,11 @@ const SummaryNode = () => {
                     .style('opacity', .9);
             }
 
-            const mouseClick = d => {
+            const mouseClick = (event, d) => {
                 if (beautifulVariable) {
                     node
                         .filter((c) => {
-                            c.selected = true
+                            c.selected = true;
                         })
 
                     link
