@@ -15,9 +15,6 @@ const App = () => {
         <div className="Box">
           <Header />
           <VisWindow />
-          <div className="Slider">
-          
-          </div>
           <br/>
           <center><Info /></center>
           <center><Footer /></center>
