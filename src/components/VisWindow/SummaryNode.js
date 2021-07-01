@@ -11,34 +11,6 @@ const SummaryNode = () => {
 
             let beautifulVariable = true;
 
-            //Initializing chart
-            const svg = d3.select('.chart')
-                .attr('width', width)
-                .attr('height', height)
-                .append('g')
-                .call(d3.zoom().on("zoom", function(event) {
-                    svg.attr("transform", event.transform)
-                }));
-
-            //Creating tooltip
-            const tooltip = d3.select('.Vis3')
-                .append('div')
-                .attr('class', 'tooltip')
-                .html('Tooltip');
-
-            const scale = d3.scaleOrdinal(d3.schemeCategory10);
-
-
-            //Initializing force simulation
-            const simulation = d3.forceSimulation()
-                .force('link', d3.forceLink().id(d => d.id))
-                .force('charge', d3.forceManyBody().strength(-50))
-                .force('collide', d3.forceCollide().radius(20))
-                .force('center', d3.forceCenter(width / 2, height / 2))
-                .force("y", d3.forceY(0))
-                .force("x", d3.forceX(0));
-
-
             //Drag functions
             const dragStart = (event, d) => {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -56,6 +28,46 @@ const SummaryNode = () => {
                 d.fx = null;
                 d.fy = null;
             }
+
+            //Setting location when ticked
+            const ticked = () => {
+                link
+                    .attr("x1", d => { return d.source.x; })
+                    .attr("y1", d => { return d.source.y; })
+                    .attr("x2", d => { return d.target.x; })
+                    .attr("y2", d => { return d.target.y; });
+
+                node
+                    .attr("cx", function (d) {return d.x;})
+                    .attr("cy", function (d) {return d.y;});
+            };
+
+            //Initializing force simulation
+            const simulation = d3.forceSimulation()
+                .force('link', d3.forceLink())
+                .force('charge', d3.forceManyBody().strength(-50))
+                .force('collision', d3.forceCollide().radius(20))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force("y", d3.forceY(0))
+                .force("x", d3.forceX(0));
+
+            const scale = d3.scaleOrdinal(d3.schemeCategory10);
+
+            //Initializing chart
+            const svg = d3.select('.chart')
+                .attr('width', width)
+                .attr('height', height)
+                .append('g')
+                .call(d3.zoom().on("zoom", function(event) {
+                    svg.attr("transform", event.transform)
+                }));
+
+            //Creating tooltip
+            const tooltip = d3.select('.Vis3')
+                .append('div')
+                .attr('class', 'tooltip')
+                .html('Tooltip');
+
 
             const mouseOver = (event, d) => {
                 tooltip.html("id:" + d.id + "<br/> email:" + d.email + "<br/> Job Title:" + d.jobTitle)
@@ -110,7 +122,7 @@ const SummaryNode = () => {
             }
 
             //Creating links
-            let link = svg
+            const link = svg
                 .selectAll('line')
                 .data(data.links).enter()
                 .append('line')
@@ -118,7 +130,7 @@ const SummaryNode = () => {
                 .attr('stroke-width', (d) => d.weight / 100);
 
             //Creating nodes
-            let node = svg
+            const node = svg
                 .selectAll('circle')
                 .data(data.nodes).enter()
                 .append('circle')
@@ -132,26 +144,6 @@ const SummaryNode = () => {
                     .on('drag', drag)
                     .on('end', dragEnd)
                 );
-
-            //Setting location when ticked
-            const ticked = () => {
-                link
-                    .attr("x1", d => {return d.source.x;})
-                    .attr("y1", d => {return d.source.y;})
-                    .attr("x2", d => {return d.target.x;})
-                    .attr("y2", d => {return d.target.y;});
-
-                node
-                    .attr("cx", function (d) {return d.x;})
-                    .attr("cy", function (d) {return d.y;});
-            };
-
-            //Starting simulation
-            simulation.nodes(data.nodes)
-                .on('tick', ticked);
-
-            simulation.force('link')
-                .links(data);
 
             const rect = svg.append('rect', 'text')
                 .attr("x", 0)
@@ -168,6 +160,10 @@ const SummaryNode = () => {
                 .style("font-size", 19)
                 .text("Reset")
                 .on('click', mouseClickButton);
+
+            //Starting simulation
+            simulation.nodes(data.nodes).on('tick', ticked);
+            simulation.force('link').links(data.links);
         })
     }, [])
 
